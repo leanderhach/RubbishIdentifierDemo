@@ -1,5 +1,11 @@
 <template>
-  <video ref="video" autoplay :width="windowWidth" :height="windowHeight" :srcObject="stream"></video>
+  <video
+    ref="video"
+    autoplay
+    :width="windowWidth"
+    :height="windowHeight"
+    :srcObject="stream"
+  ></video>
   <canvas ref="canvas"></canvas>
   <img ref="photo" src="" alt="" />
 </template>
@@ -83,8 +89,8 @@ async function takePicture() {
         data
       );
 
-      if(label.data) {
-          emit("returnedLabelData", label.data)
+      if (label.data) {
+        emit("returnedLabelData", label.data);
       }
     }
   }

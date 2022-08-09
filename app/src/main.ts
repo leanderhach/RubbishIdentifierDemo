@@ -4,13 +4,23 @@ import "./registerServiceWorker";
 import store from "./store";
 
 /* import the fontawesome core */
-import { library } from '@fortawesome/fontawesome-svg-core'
+import { library } from "@fortawesome/fontawesome-svg-core";
 
 /* import font awesome icon component */
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 /* import specific icons */
-import { faArrowLeft, faArrowRight, faCamera, faInfo, faRotateLeft, faSadTear, faThumbsDown, faThumbsUp, faTimes} from '@fortawesome/free-solid-svg-icons'
+import {
+  faArrowLeft,
+  faArrowRight,
+  faCamera,
+  faInfo,
+  faRotateLeft,
+  faSadTear,
+  faThumbsDown,
+  faThumbsUp,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
 library.add(faCamera);
@@ -25,5 +35,7 @@ library.add(faThumbsDown);
 
 /* add font awesome icon component */
 
-
-createApp(App).use(store).component('font-awesome-icon', FontAwesomeIcon).mount("#app");
+createApp(App)
+  .use(store)
+  .component("font-awesome-icon", FontAwesomeIcon)
+  .mount("#app");
