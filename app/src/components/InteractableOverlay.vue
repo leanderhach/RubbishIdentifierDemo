@@ -1,5 +1,8 @@
 <template>
-  <main @touchstart="registerTouchStart" @touchend="registerTouchMove">
+  <main
+    @touchstart.self="registerTouchStart"
+    @touchend.self="registerTouchMove"
+  >
     <!-- <div class="organics-marker"></div> -->
     <div
       :class="['side-marker', 'recycling-marker', { active: swipedLeft }]"
@@ -24,12 +27,17 @@
       </div>
       <button class="shutter" @click="takePhoto">
         <font-awesome-icon
-          v-if="!hasTakenPhoto"
+          v-if="!hasTakenPhoto && !isLoading"
           icon="fa-solid fa-camera"
         ></font-awesome-icon>
         <font-awesome-icon
-          v-else
+          v-if="hasTakenPhoto && !isLoading"
           icon="fa-solid fa-rotate-left"
+        ></font-awesome-icon>
+        <font-awesome-icon
+          class="loading-spinner"
+          icon="fa-solid fa-spinner"
+          v-if="hasTakenPhoto && isLoading"
         ></font-awesome-icon>
       </button>
       <div class="text container">
@@ -58,6 +66,7 @@ let touchDirection = ref(0);
 let isWasteRecyclable = ref(false);
 
 let hasTakenPhoto = ref(false);
+let isLoading = ref(false);
 
 let isPopupOpen = ref(false);
 let popup = ref({
@@ -69,6 +78,7 @@ let popup = ref({
 watch(
   () => bus.value.get("returnedLabelData"),
   async (val) => {
+    isLoading.value = false;
     await processLabelData(val);
     const [sidebarCollapsedBus] = val ?? [];
     bus.value.get("returnedLabelData").value = sidebarCollapsedBus;
@@ -81,6 +91,7 @@ const takePhoto = () => {
   hasTakenPhoto.value = !hasTakenPhoto.value;
 
   if (hasTakenPhoto.value) {
+    isLoading.value = true;
     emit("justTookAPhoto", true);
   } else {
     if (isPopupOpen.value) {
@@ -91,7 +102,6 @@ const takePhoto = () => {
 
 function togglePopup() {
   isPopupOpen.value = !isPopupOpen.value;
-  console.log(isPopupOpen.value);
 }
 
 function calculateTouchDirection() {
@@ -341,6 +351,19 @@ main {
       font-size: 1.5rem;
       margin-left: 1rem;
     }
+  }
+}
+
+.loading-spinner {
+  animation: rotating 1s infinite linear;
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 </style>

@@ -24,11 +24,9 @@ let windowWidth = window.innerWidth;
 watch(
   () => bus.value.get("justTookAPhoto"),
   async (val) => {
-    console.log("emitted an event!");
     await takePicture();
     const [sidebarCollapsedBus] = val ?? [];
     bus.value.get("justTookAPhoto").value = sidebarCollapsedBus;
-    console.log(bus.value);
   }
 );
 

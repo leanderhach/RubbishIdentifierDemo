@@ -17,6 +17,7 @@ import {
   faInfo,
   faRotateLeft,
   faSadTear,
+  faSpinner,
   faThumbsDown,
   faThumbsUp,
   faTimes,
@@ -32,6 +33,7 @@ library.add(faSadTear);
 library.add(faThumbsUp);
 library.add(faInfo);
 library.add(faThumbsDown);
+library.add(faSpinner);
 
 /* add font awesome icon component */
 
