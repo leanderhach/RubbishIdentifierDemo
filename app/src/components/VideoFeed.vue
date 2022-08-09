@@ -39,7 +39,10 @@ const photo = ref<HTMLImageElement | null>(null);
 
 async function getStream() {
   try {
-    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    stream = await navigator.mediaDevices.getUserMedia({
+      audio: false,
+      video: { facingMode: "environment" },
+    });
   } catch (e: any) {
     console.log("Rejected!", e);
   }
