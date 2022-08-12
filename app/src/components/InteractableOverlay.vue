@@ -3,6 +3,7 @@
     @touchstart.self="registerTouchStart"
     @touchend.self="registerTouchMove"
   >
+    <button class="play-button">Let's Play!</button>
     <!-- <div class="organics-marker"></div> -->
     <div
       :class="['side-marker', 'recycling-marker', { active: swipedLeft }]"
@@ -356,6 +357,21 @@ main {
 
 .loading-spinner {
   animation: rotating 1s infinite linear;
+}
+
+.play-button {
+  padding:10px 20px;
+  border-radius:20px;
+  border:none;
+  outline:none;
+  background-color: #27ae60;
+  color:white;
+  position:absolute;
+  top:30px;
+  right:30px;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight:bold;
+  font-weight: 1.25rem;
 }
 
 @keyframes rotating {
