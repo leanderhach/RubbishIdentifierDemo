@@ -1,20 +1,26 @@
 <template>
-  <Suspense>
-    <video-feed />
-  </Suspense>
-  <interactable-overlay />
+  <main>
+    <!-- <Suspense>
+          <video-feed />
+        </Suspense>
+        <interactable-overlay /> -->
+    <Game />
+  </main>
 </template>
 
 <script lang="ts" setup>
-import VideoFeed from "./components/VideoFeed.vue";
-import InteractableOverlay from "./components/InteractableOverlay.vue";
+import VideoFeed from "./components/scanner/VideoFeed.vue";
+import InteractableOverlay from "./components/scanner/InteractableOverlay.vue";
+import Game from "./components/views/Game.vue";
 </script>
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap");
+@import "~bulma";
 
 body,
-html {
+html,
+main {
   margin: 0;
   padding: 0;
   height: 100%;

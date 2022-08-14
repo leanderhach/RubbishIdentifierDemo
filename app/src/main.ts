@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import "./registerServiceWorker";
-import store from "./store";
+import { store, key } from "./store";
 
 /* import the fontawesome core */
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -38,6 +38,6 @@ library.add(faSpinner);
 /* add font awesome icon component */
 
 createApp(App)
-  .use(store)
+  .use(store, key)
   .component("font-awesome-icon", FontAwesomeIcon)
   .mount("#app");

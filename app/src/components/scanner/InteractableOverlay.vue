@@ -51,7 +51,7 @@
 
 <script lang="ts" setup>
 import { ref, watch } from "vue";
-import useEventsBus from "../utils/EventBus";
+import useEventsBus from "../../utils/EventBus";
 
 const { emit } = useEventsBus();
 const { bus } = useEventsBus();

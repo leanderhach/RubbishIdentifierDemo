@@ -13,7 +13,7 @@
 <script lang="ts" setup>
 import { ref, watch } from "vue";
 import axios from "axios";
-import useEventsBus from "../utils/EventBus";
+import useEventsBus from "../../utils/EventBus";
 
 const { bus } = useEventsBus();
 const { emit } = useEventsBus();
