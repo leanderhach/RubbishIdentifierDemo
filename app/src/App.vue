@@ -1,22 +1,31 @@
 <template>
   <main>
-    <!-- <Suspense>
-          <video-feed />
-        </Suspense>
-        <interactable-overlay /> -->
-    <Game />
+    <template v-if="!isPlayingGame">
+      <Suspense>
+        <video-feed />
+      </Suspense>
+      <interactable-overlay />
+    </template>
+    <game-view v-if="isPlayingGame" />
   </main>
 </template>
 
 <script lang="ts" setup>
 import VideoFeed from "./components/scanner/VideoFeed.vue";
 import InteractableOverlay from "./components/scanner/InteractableOverlay.vue";
-import Game from "./components/views/Game.vue";
+import gameView from "./components/views/Game.vue";
+import { computed } from "@vue/runtime-core";
+import { useStore } from "./store";
+
+const store = useStore();
+
+const isPlayingGame = computed<boolean>(() => store.state.isPlaying);
 </script>
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap");
 @import "~bulma";
+@import url("https://fonts.googleapis.com/css2?family=Silkscreen&display=swap");
 
 body,
 html,
@@ -26,6 +35,7 @@ main {
   height: 100%;
   width: 100%;
 }
+
 #app {
   margin: 0;
   width: 100%;

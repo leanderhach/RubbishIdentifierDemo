@@ -1,35 +1,28 @@
 <template>
-    <div class="game-play">
-
-    </div>
+  <div class="game-play">
+    <game-header></game-header>
+    <game-body></game-body>
+    <game-actions></game-actions>
+  </div>
 </template>
 
 <script setup>
 import { ref, computed } from "vue";
-import { useStore } from '../../store';
+import { useStore } from "../../store";
+import gameHeader from "../game/gameHeader.vue";
+import gameBody from "../game/gameBody.vue";
+import gameActions from "../game/gameActions.vue";
 
 const store = useStore();
-
-const rubbishItem = {
-    name: "Plastic Bag",
-    image: "@/images/rubbish/plastic_bag.jpeg",
-    type: "plastic",
-    recycling: true,
-    generalWaste: false,
-    organics: false,
-    flavorText: "The vaunted plastic bag. This little bugger is found in almost every home, but he's so dangerous he's been banned all over the world.",
-}
 </script>
 
 <script>
 export default {
-    name: "gamePlay"
-}
+  name: "gamePlay",
+};
 </script>
-
 
 <style lang="scss">
 .game-play {
-
 }
 </style>

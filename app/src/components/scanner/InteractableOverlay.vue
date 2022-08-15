@@ -3,7 +3,7 @@
     @touchstart.self="registerTouchStart"
     @touchend.self="registerTouchMove"
   >
-    <button class="play-button">Let's Play!</button>
+    <button class="play-button" @click="toggleIsPlaying">Let's Play!</button>
     <!-- <div class="organics-marker"></div> -->
     <div
       :class="['side-marker', 'recycling-marker', { active: swipedLeft }]"
@@ -52,9 +52,11 @@
 <script lang="ts" setup>
 import { ref, watch } from "vue";
 import useEventsBus from "../../utils/EventBus";
+import { useStore } from "@/store";
 
 const { emit } = useEventsBus();
 const { bus } = useEventsBus();
+const store = useStore();
 
 let touchStartX = ref(0);
 let touchEndX = ref(0);
@@ -100,6 +102,10 @@ const takePhoto = () => {
     }
   }
 };
+
+function toggleIsPlaying() {
+  store.commit("setIsPlaying", true);
+}
 
 function togglePopup() {
   isPopupOpen.value = !isPopupOpen.value;
