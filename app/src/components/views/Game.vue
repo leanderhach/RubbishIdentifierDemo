@@ -58,14 +58,9 @@ const demoRubbish = {
       text: "Cleaning the bottle makes in easier to recycle",
     },
     {
-      name: "twist",
-      healthEffect: 25,
+      name: "clean",
+      healthEffect: 50,
       text: "Removing the cap makes the bottle recyclable",
-    },
-    {
-      name: "remove",
-      healthEffect: 25,
-      text: "Labels aren't recyclable",
     },
   ],
 };

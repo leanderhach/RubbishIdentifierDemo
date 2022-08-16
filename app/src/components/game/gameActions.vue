@@ -22,17 +22,17 @@
       <div class="column">
         <button
           class="action-button action-button--green"
-          @click="emitActionChoice('twist')"
+          @click="emitActionChoice('clean')"
         >
-          Twist
+          Clean
         </button>
       </div>
       <div class="column">
         <button
           class="action-button action-button--purple"
-          @click="emitActionChoice('remove')"
+          @click="emitActionChoice('grab')"
         >
-          Remove
+          Grab
         </button>
       </div>
     </div>
