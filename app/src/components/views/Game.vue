@@ -35,7 +35,7 @@
 import { action, rubbish, useStore } from "../../store";
 import { ref, onMounted, computed, watch } from "vue";
 import gamePlay from "../game/gamePlay.vue";
-import useEventsBus from "@/utils/EventBus";
+import useEventsBus from "../../utils/EventBus";
 
 const store = useStore();
 const { bus } = useEventsBus();
@@ -53,7 +53,7 @@ const demoRubbish = {
   score: 70,
   actions: [
     {
-      name: "clean",
+      name: "squash",
       healthEffect: 50,
       text: "Cleaning the bottle makes in easier to recycle",
     },
@@ -63,7 +63,7 @@ const demoRubbish = {
       text: "Removing the cap makes the bottle recyclable",
     },
     {
-      name: "peel",
+      name: "remove",
       healthEffect: 25,
       text: "Labels aren't recyclable",
     },

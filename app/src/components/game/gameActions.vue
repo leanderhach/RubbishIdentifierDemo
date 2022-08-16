@@ -4,25 +4,17 @@
       <div class="column">
         <button
           class="action-button action-button--blue"
-          @click="emitActionChoice('clean')"
+          @click="emitActionChoice('cut')"
         >
-          Clean
+          Cut
         </button>
       </div>
       <div class="column">
         <button
           class="action-button action-button--orange"
-          @click="emitActionChoice('peel')"
+          @click="emitActionChoice('squash')"
         >
-          Peel
-        </button>
-      </div>
-      <div class="column">
-        <button
-          class="action-button action-button--pink"
-          @click="emitActionChoice('twist')"
-        >
-          Twist
+          Squash
         </button>
       </div>
     </div>
@@ -30,25 +22,17 @@
       <div class="column">
         <button
           class="action-button action-button--green"
-          @click="emitActionChoice('squash')"
+          @click="emitActionChoice('twist')"
         >
-          Squash
+          Twist
         </button>
       </div>
       <div class="column">
         <button
           class="action-button action-button--purple"
-          @click="emitActionChoice('chop')"
+          @click="emitActionChoice('remove')"
         >
-          Chop
-        </button>
-      </div>
-      <div class="column">
-        <button
-          class="action-button action-button--red"
-          @click="emitActionChoice('cut')"
-        >
-          Cut
+          Remove
         </button>
       </div>
     </div>
@@ -82,10 +66,9 @@
 </template>
 
 <script lang="ts" setup>
-import actionButton from "../ui/ActionButton.vue";
 import useEventsBus from "../../utils/EventBus";
-import { rubbish, useStore } from "@/store";
-import { computed } from "@vue/runtime-core";
+import { rubbish, useStore } from "../../store";
+import { computed } from "vue";
 
 const { emit } = useEventsBus();
 const store = useStore();
@@ -145,5 +128,10 @@ export default {
     background-color: #ffd32a;
     color: white;
   }
+}
+
+.column {
+  display: flex !important;
+  justify-content: center;
 }
 </style>

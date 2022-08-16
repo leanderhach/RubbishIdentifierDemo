@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useStore } from "@/store";
+import { useStore } from "../../store";
 import { computed } from "vue";
 
 const store = useStore();
