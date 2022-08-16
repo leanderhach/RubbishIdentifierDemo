@@ -74,6 +74,7 @@ const { emit } = useEventsBus();
 const store = useStore();
 
 function emitActionChoice(choice: string) {
+  navigator.vibrate(300);
   emit("playerAction", choice);
 }
 
