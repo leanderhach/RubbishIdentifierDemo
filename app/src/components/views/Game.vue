@@ -75,9 +75,11 @@ function processPlayerAction(action: any) {
     if (rubbishItem.value.bin === action && rubbishItem.value.health <= 0) {
       console.log("Congrats! that was the right choice");
       store.commit("removeFirstRubbishItem");
+      navigator.vibrate([100, 20, 50, 20, 200]);
       return;
     } else {
       console.log("wtaf are you doing");
+      navigator.vibrate([100, 20, 100]);
       return;
     }
   }
@@ -95,7 +97,9 @@ function processPlayerAction(action: any) {
       rubbishItem.value.actions.indexOf(isCorrectAction),
       1
     );
+    navigator.vibrate([100]);
   } else {
+    navigator.vibrate([100, 20, 100]);
     console.log("Nope!");
   }
 }
