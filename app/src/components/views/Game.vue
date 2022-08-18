@@ -37,11 +37,20 @@ import { ref, onMounted, computed, watch } from "vue";
 import gamePlay from "../game/gamePlay.vue";
 import useEventsBus from "../../utils/EventBus";
 
+
+//------------------------------------------------------------------------------
+
+
 const store = useStore();
 const { bus } = useEventsBus();
 
 let currentGameState = computed(() => store.state.gameState);
 
+
+//------------------------------------------------------------------------------
+
+
+// [TODO] Delete
 const demoRubbish = {
   name: "Plastic Bottle",
   image: "/rubbish/plastic-bottle.png",
@@ -64,6 +73,61 @@ const demoRubbish = {
     },
   ],
 };
+
+
+//------------------------------------------------------------------------------
+
+
+const rubbish = [
+  {
+    name: "Plastic Bottle",
+    image: "/rubbish/plastic-bottle.png",
+    type: "plastic",
+    bin: "recycling",
+    flavorText:
+      "The vaunted plastic bottle. Found in every home in the country, this sucker needs to be handled with extreme care",
+    health: 100,
+    score: 70,
+    actions: [
+      {
+        name: "squash",
+        healthEffect: 50,
+        text: "Cleaning the bottle makes in easier to recycle",
+      },
+      {
+        name: "clean",
+        healthEffect: 50,
+        text: "Removing the cap makes the bottle recyclable",
+      },
+    ],
+  },
+  {
+    name: "Aluminium Can",
+    image: "/rubbish/aluminium-can.png",
+    type: "aluminium",
+    bin: "recycling",
+    flavorText:
+      "[CHANGE] Damn those Boss coffee cans are tough...",
+    health: 100,
+    score: 70,
+    actions: [
+      {
+        name: "squash",
+        healthEffect: 50,
+        text: "Making the can smaller, means more stuff can fit in a bin",
+      },
+      {
+        name: "clean",
+        healthEffect: 50,
+        text: "[CHANGE]",
+      },
+    ],
+  }
+];
+
+
+//------------------------------------------------------------------------------
+
 
 // functions required for playing
 function processPlayerAction(action: any) {
@@ -104,14 +168,27 @@ function processPlayerAction(action: any) {
   }
 }
 
+
+//------------------------------------------------------------------------------
+
+
 function startGame() {
-  store.commit("createRubbishItem", JSON.parse(JSON.stringify(demoRubbish)));
+  store.commit("createRubbishItem", JSON.parse(JSON.stringify(rubbish[0])));
   store.commit("setGameState", "playing");
 }
+
+
+//------------------------------------------------------------------------------
+
 
 function toggleIsPlaying() {
   store.commit("setIsPlaying", false);
 }
+
+
+//------------------------------------------------------------------------------
+
+
 // watcher for player actions
 watch(
   () => bus.value.get("playerAction"),
@@ -122,14 +199,26 @@ watch(
   }
 );
 
+
+//------------------------------------------------------------------------------
+
+
 // computed variables from the store
 let rubbishItem = computed<rubbish>((): rubbish => {
   return store.state.rubbishItems[0];
 });
 
+
+//------------------------------------------------------------------------------
+
+
 let currentHighScore = computed<number>((): number => {
   return store.state.currentHighScore;
 });
+
+
+//------------------------------------------------------------------------------
+
 
 onMounted(() => {
   store.commit("setGameState", "welcome");
