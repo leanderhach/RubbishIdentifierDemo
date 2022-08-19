@@ -50,35 +50,10 @@ let currentGameState = computed(() => store.state.gameState);
 //------------------------------------------------------------------------------
 
 
-// [TODO] Delete
-const demoRubbish = {
-  name: "Plastic Bottle",
-  image: "/rubbish/plastic-bottle.png",
-  type: "plastic",
-  bin: "recycling",
-  flavorText:
-    "the vaunted plastic bottle. Found in every home in the country, this sucker needs to be handled with extreme care",
-  health: 100,
-  score: 70,
-  actions: [
-    {
-      name: "squash",
-      healthEffect: 50,
-      text: "Cleaning the bottle makes in easier to recycle",
-    },
-    {
-      name: "clean",
-      healthEffect: 50,
-      text: "Removing the cap makes the bottle recyclable",
-    },
-  ],
-};
-
-
 //------------------------------------------------------------------------------
 
 
-const rubbish = [
+const rubbishItems = [
   {
     name: "Plastic Bottle",
     image: "/rubbish/plastic-bottle.png",
@@ -90,38 +65,38 @@ const rubbish = [
     score: 70,
     actions: [
       {
-        name: "squash",
+        name: "clean",
         healthEffect: 50,
         text: "Cleaning the bottle makes in easier to recycle",
       },
       {
-        name: "clean",
+        name: "twist",
         healthEffect: 50,
         text: "Removing the cap makes the bottle recyclable",
       },
     ],
   },
   {
-    name: "Aluminium Can",
-    image: "/rubbish/aluminium-can.png",
-    type: "aluminium",
-    bin: "recycling",
+    name: "Plastic Wrapper",
+    image: "/rubbish/plastic-wrapper.png",
+    type: "plastic",
+    bin: "rubbish",
     flavorText:
-      "[CHANGE] Damn those Boss coffee cans are tough...",
+      "[CHANGE]",
     health: 100,
     score: 70,
-    actions: [
-      {
-        name: "squash",
-        healthEffect: 50,
-        text: "Making the can smaller, means more stuff can fit in a bin",
-      },
-      {
-        name: "clean",
-        healthEffect: 50,
-        text: "[CHANGE]",
-      },
-    ],
+    actions: [],
+  },
+  {
+    name: "Food Scraps",
+    image: "/rubbish/food-scraps.png",
+    type: "organics",
+    bin: "organics",
+    flavorText:
+      "Put on your HASMAT suits for this one.",
+    health: 100,
+    score: 70,
+    actions: [],
   }
 ];
 
@@ -173,7 +148,7 @@ function processPlayerAction(action: any) {
 
 
 function startGame() {
-  store.commit("createRubbishItem", JSON.parse(JSON.stringify(rubbish[0])));
+  store.commit("createRubbishItem", JSON.parse(JSON.stringify(rubbishItems[0])));
   store.commit("setGameState", "playing");
 }
 
