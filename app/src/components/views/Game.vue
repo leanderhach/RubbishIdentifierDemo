@@ -41,6 +41,10 @@ import { ref, onMounted, computed, watch } from "vue";
 import gamePlay from "../game/gamePlay.vue";
 import useEventsBus from "../../utils/EventBus";
 
+
+//------------------------------------------------------------------------------
+
+
 const store = useStore();
 const { bus } = useEventsBus();
 
@@ -138,6 +142,10 @@ function processPlayerAction(action: any) {
   }
 }
 
+
+//------------------------------------------------------------------------------
+
+
 function startGame() {
   store.commit("createRubbishItem", JSON.parse(JSON.stringify(demoRubbish)));
   store.commit("createRubbishItem", JSON.parse(JSON.stringify(demoRubbish)));
@@ -145,9 +153,18 @@ function startGame() {
   store.commit("setCurrentHighScore", 0);
 }
 
+
+//------------------------------------------------------------------------------
+
+
 function toggleIsPlaying() {
   store.commit("setIsPlaying", false);
 }
+
+
+//------------------------------------------------------------------------------
+
+
 // watcher for player actions
 watch(
   () => bus.value.get("playerAction"),
@@ -158,14 +175,26 @@ watch(
   }
 );
 
+
+//------------------------------------------------------------------------------
+
+
 // computed variables from the store
 let rubbishItem = computed<rubbish>((): rubbish => {
   return store.state.rubbishItems[0];
 });
 
+
+//------------------------------------------------------------------------------
+
+
 let currentHighScore = computed<number>((): number => {
   return store.state.currentHighScore;
 });
+
+
+//------------------------------------------------------------------------------
+
 
 onMounted(() => {
   store.commit("setGameState", "welcome");
