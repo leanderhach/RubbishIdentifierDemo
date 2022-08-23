@@ -94,40 +94,53 @@ export default {
   border: none;
   font-family: "Silkscreen";
   width: 100px;
+  background-color: var(--light-purple);
+  color: white;
+  position: relative;
+  margin-top:0;
+  border-bottom: 8px solid var(--dark-purple);
+  transition: all 0.3s ease;
 
-  &--green {
-    background-color: #3ae374;
-    color: white;
-  }
-
-  &--red {
-    background-color: #ff3838;
-    color: white;
-  }
-
-  &--orange {
-    background-color: #ff9f1a;
-    color: white;
+  &:hover,
+  &:active {
+    border-bottom: 1px solid var(--dark-purple);
+    margin-top: 7px;
+    transition: all 0.3s ease;
   }
 
-  &--blue {
-    background-color: #0652dd;
-    color: white;
-  }
+  // &--green {
+  //   background-color: #3ae374;
+  //   color: white;
+  // }
 
-  &--purple {
-    background-color: #c56cf0;
-    color: white;
-  }
+  // &--red {
+  //   background-color: #ff3838;
+  //   color: white;
+  // }
 
-  &--pink {
-    background-color: #ef5777;
-    color: white;
-  }
-  &--yellow {
-    background-color: #ffd32a;
-    color: white;
-  }
+  // &--orange {
+  //   background-color: #ff9f1a;
+  //   color: white;
+  // }
+
+  // &--blue {
+  //   background-color: #0652dd;
+  //   color: white;
+  // }
+
+  // &--purple {
+  //   background-color: #c56cf0;
+  //   color: white;
+  // }
+
+  // &--pink {
+  //   background-color: #ef5777;
+  //   color: white;
+  // }
+  // &--yellow {
+  //   background-color: #ffd32a;
+  //   color: white;
+  // }
 }
 
 .column {

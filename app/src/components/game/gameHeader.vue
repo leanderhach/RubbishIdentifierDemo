@@ -29,16 +29,17 @@ export default {
 
 <style lang="scss">
 .game-header {
-  width: 60%;
-  position: relative;
-  border-radius: 40px;
-  background-color: white;
-  padding: 1rem 2rem;
-  margin: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
 
   &__name {
     font-weight: bold;
     font-family: "Silkscreen";
+    color: var(--red);
+    font-size: 1.25rem;
+    text-align: center;
+    margin-bottom: 1rem;
   }
 }
 </style>

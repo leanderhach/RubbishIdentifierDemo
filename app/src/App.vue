@@ -25,7 +25,7 @@ const isPlayingGame = computed<boolean>(() => store.state.isPlaying);
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap");
 @import "~bulma";
-@import url("https://fonts.googleapis.com/css2?family=Silkscreen&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Dirt&family=Silkscreen&display=swap");
 
 body,
 html,
@@ -36,12 +36,21 @@ main {
   width: 100%;
 }
 
+:root {
+  --background-color: #f1d893;
+  --dark-purple: #51167f;
+  --light-purple: #86399e;
+  --red: #ed5b75;
+  --green: #61b0a5;
+  --black: #060c10;
+}
+
 #app {
   margin: 0;
   width: 100%;
   height: 100%;
   position: relative;
-  background-color: black;
+  background-color: var(--black);
   font-family: "Source Sans Pro", sans-serif;
   font-weight: 400;
 }
@@ -51,5 +60,34 @@ main {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h1,
+h2,
+h3,
+p {
+  &.is-brand {
+    font-family: "Rubik Dirt";
+  }
+
+  &.is-white {
+    color: white;
+  }
+}
+
+.button {
+  &.is-circle {
+    border-radius: 50%;
+  }
+
+  &.is-big-icon {
+    font-size: 1rem;
+    height: 4rem;
+    width: 4rem;
+  }
 }
 </style>

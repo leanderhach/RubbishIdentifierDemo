@@ -17,12 +17,20 @@ export type rubbish = {
   flavorText: string;
   health: number;
   actions: Array<action>;
+  location: string | Array<number>;
+};
+
+export type rubbishBoss = {
+  name: string;
+  segments: Array<rubbish>;
 };
 
 export interface State {
   gameState: string;
   currentHighScore: number;
+  allTimeHighScore: number;
   rubbishItems: Array<rubbish>;
+  rubbishBosses: Array<rubbishBoss>;
   isPlaying: boolean;
 }
 
@@ -32,7 +40,9 @@ export const store = createStore<State>({
   state: {
     gameState: "",
     currentHighScore: 0,
+    allTimeHighScore: 0,
     rubbishItems: Array<rubbish>(),
+    rubbishBosses: Array<rubbishBoss>(),
     isPlaying: false,
   },
   mutations: {
@@ -45,15 +55,15 @@ export const store = createStore<State>({
     createRubbishItem(state: State, payload: rubbish) {
       state.rubbishItems.push(payload);
     },
+    setCurrentHighScore(state: State, score: number) {
+      state.currentHighScore = score;
+    },
     removeFirstRubbishItem(state: State) {
       const item: rubbish = state.rubbishItems[0];
 
       console.log(item);
 
       // add to the player's score
-      console.log("item is being removed");
-      console.log(item.score);
-      console.log(state.currentHighScore);
       state.currentHighScore += item.score;
 
       // remove the first item in the array
@@ -62,6 +72,11 @@ export const store = createStore<State>({
       // check if all the items from the array have been removed. If yes, end the game
       if (state.rubbishItems.length <= 0) {
         state.gameState = "finished";
+
+        state.allTimeHighScore =
+          state.currentHighScore > state.allTimeHighScore
+            ? state.currentHighScore
+            : state.allTimeHighScore;
       }
     },
   },

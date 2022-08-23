@@ -3,11 +3,15 @@
     <div class="game-welcome" v-if="currentGameState === 'welcome'">
       <div class="columns">
         <div class="column">
-          <h1>Rubbish Wranglers</h1>
-          <p>High Score: {{ currentHighScore }}</p>
+          <h1 class="is-brand is-white">Rubbish Wranglers</h1>
         </div>
         <div class="column">
-          <button class="button is-link" @click="startGame">Lets Play!</button>
+          <p class="is-white">High Score: {{ currentHighScore }}</p>
+        </div>
+        <div class="column">
+          <button class="button is-circle is-big-icon" @click="startGame">
+            <font-awesome-icon icon="fa-solid fa-play"></font-awesome-icon>
+          </button>
         </div>
       </div>
     </div>
@@ -32,7 +36,7 @@
 </template>
 
 <script lang="ts" setup>
-import { action, rubbish, useStore } from "../../store";
+import { action, rubbish, rubbishBoss, useStore } from "../../store";
 import { ref, onMounted, computed, watch } from "vue";
 import gamePlay from "../game/gamePlay.vue";
 import useEventsBus from "../../utils/EventBus";
@@ -42,9 +46,10 @@ const { bus } = useEventsBus();
 
 let currentGameState = computed(() => store.state.gameState);
 
-const demoRubbish = {
+const demoRubbish: rubbish = {
   name: "Plastic Bottle",
   image: "/rubbish/plastic-bottle.png",
+  location: "focus",
   type: "plastic",
   bin: "recycling",
   flavorText:
@@ -61,6 +66,35 @@ const demoRubbish = {
       name: "clean",
       healthEffect: 50,
       text: "Removing the cap makes the bottle recyclable",
+    },
+  ],
+};
+
+let demoRubbishBoss: rubbishBoss = {
+  name: "Boss 1",
+  segments: [
+    {
+      name: "Left Arm",
+      type: "paper",
+      bin: "recycling",
+      image: "/bosses/boss1/left_arm.png",
+      location: [100, 60],
+      flavorText:
+        "the vaunted plastic bottle. Found in every home in the country, this sucker needs to be handled with extreme care",
+      health: 100,
+      score: 70,
+      actions: [
+        {
+          name: "squash",
+          healthEffect: 50,
+          text: "Cleaning the bottle makes in easier to recycle",
+        },
+        {
+          name: "clean",
+          healthEffect: 50,
+          text: "Removing the cap makes the bottle recyclable",
+        },
+      ],
     },
   ],
 };
@@ -106,7 +140,9 @@ function processPlayerAction(action: any) {
 
 function startGame() {
   store.commit("createRubbishItem", JSON.parse(JSON.stringify(demoRubbish)));
+  store.commit("createRubbishItem", JSON.parse(JSON.stringify(demoRubbish)));
   store.commit("setGameState", "playing");
+  store.commit("setCurrentHighScore", 0);
 }
 
 function toggleIsPlaying() {

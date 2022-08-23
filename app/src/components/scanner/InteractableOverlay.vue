@@ -378,6 +378,11 @@ main {
   font-family: "Source Sans Pro", sans-serif;
   font-weight: bold;
   font-weight: 1.25rem;
+  background: linear-gradient(
+    301deg,
+    rgba(245, 59, 80, 1) 0%,
+    rgba(255, 211, 42, 1) 100%
+  );
 }
 
 @keyframes rotating {
