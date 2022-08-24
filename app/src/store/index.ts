@@ -6,11 +6,14 @@ export type action = {
   name: string;
   healthEffect: number;
   text: string;
+  validImages: Array<number>;
 };
 
 export type rubbish = {
   name: string;
-  image: string;
+  baseImage: number;
+  images: Array<string>;
+  actionsCount: number;
   type: string;
   bin: string;
   score: number;
@@ -71,12 +74,17 @@ export const store = createStore<State>({
 
       // check if all the items from the array have been removed. If yes, end the game
       if (state.rubbishItems.length <= 0) {
-        state.gameState = "finished";
+        // check if there are any bosses
+        if (state.rubbishBosses.length > 0) {
+          state.gameState = "bossBattle";
+        } else {
+          state.gameState = "finished";
 
-        state.allTimeHighScore =
-          state.currentHighScore > state.allTimeHighScore
-            ? state.currentHighScore
-            : state.allTimeHighScore;
+          state.allTimeHighScore =
+            state.currentHighScore > state.allTimeHighScore
+              ? state.currentHighScore
+              : state.allTimeHighScore;
+        }
       }
     },
   },

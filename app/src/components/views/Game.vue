@@ -15,7 +15,11 @@
         </div>
       </div>
     </div>
-    <game-play v-if="currentGameState === 'playing'"></game-play>
+    <div class="game-body" v-if="currentGameState === 'playing'">
+      <game-header></game-header>
+      <canvas class="game-canvas" ref="gameCanvas"></canvas>
+      <game-actions></game-actions>
+    </div>
     <div class="game-goodbye" v-if="currentGameState === 'finished'">
       <div class="columns">
         <div class="column">
@@ -41,18 +45,28 @@ import { ref, onMounted, computed, watch } from "vue";
 import gamePlay from "../game/gamePlay.vue";
 import useEventsBus from "../../utils/EventBus";
 
-
-//------------------------------------------------------------------------------
-
+import gameHeader from "../game/gameHeader.vue";
+import gameActions from "../game/gameActions.vue";
 
 const store = useStore();
 const { bus } = useEventsBus();
+const gameCanvas = ref<HTMLCanvasElement | null>(null);
 
+let loadedImages = Array<HTMLImageElement>();
 let currentGameState = computed(() => store.state.gameState);
 
-const demoRubbish: rubbish = {
+const plasticBottle: rubbish = {
   name: "Plastic Bottle",
-  image: "/rubbish/plastic-bottle.png",
+  images: [
+    //clean bottle with cap
+    "plasticBottle-0.png",
+    // dirty bottle, no cap
+    "plasticBottle-1.png",
+    // clean bottle, no cap
+    "plasticBottle-2.png",
+    //dirty bottle with cap
+    "plasticBottle-3.png",
+  ],
   location: "focus",
   type: "plastic",
   bin: "recycling",
@@ -60,48 +74,76 @@ const demoRubbish: rubbish = {
     "the vaunted plastic bottle. Found in every home in the country, this sucker needs to be handled with extreme care",
   health: 100,
   score: 70,
+  actionsCount: 2,
+  baseImage: 3,
   actions: [
-    {
-      name: "squash",
-      healthEffect: 50,
-      text: "Cleaning the bottle makes in easier to recycle",
-    },
     {
       name: "clean",
       healthEffect: 50,
+      text: "Cleaning the bottle makes in easier to recycle",
+      validImages: [0, 2],
+    },
+    {
+      name: "remove",
+      healthEffect: 50,
       text: "Removing the cap makes the bottle recyclable",
+      validImages: [1, 2],
     },
   ],
 };
 
-let demoRubbishBoss: rubbishBoss = {
-  name: "Boss 1",
-  segments: [
-    {
-      name: "Left Arm",
-      type: "paper",
-      bin: "recycling",
-      image: "/bosses/boss1/left_arm.png",
-      location: [100, 60],
-      flavorText:
-        "the vaunted plastic bottle. Found in every home in the country, this sucker needs to be handled with extreme care",
-      health: 100,
-      score: 70,
-      actions: [
-        {
-          name: "squash",
-          healthEffect: 50,
-          text: "Cleaning the bottle makes in easier to recycle",
-        },
-        {
-          name: "clean",
-          healthEffect: 50,
-          text: "Removing the cap makes the bottle recyclable",
-        },
-      ],
-    },
-  ],
-};
+// const foodScraps: rubbish = {
+//   name: "Food Scraps",
+//   image: "/rubbish/plastic-bottle.png",
+//   location: "focus",
+//   type: "plastic",
+//   bin: "recycling",
+//   flavorText:
+//     "the vaunted plastic bottle. Found in every home in the country, this sucker needs to be handled with extreme care",
+//   health: 100,
+//   score: 70,
+//   actions: [
+//     {
+//       name: "squash",
+//       healthEffect: 50,
+//       text: "Cleaning the bottle makes in easier to recycle",
+//     },
+//     {
+//       name: "clean",
+//       healthEffect: 50,
+//       text: "Removing the cap makes the bottle recyclable",
+//     },
+//   ],
+// };
+
+// let demoRubbishBoss: rubbishBoss = {
+//   name: "Boss 1",
+//   segments: [
+//     {
+//       name: "Left Arm",
+//       type: "paper",
+//       bin: "recycling",
+//       image: "/bosses/boss1/left_arm.png",
+//       location: [100, 60],
+//       flavorText:
+//         "the vaunted plastic bottle. Found in every home in the country, this sucker needs to be handled with extreme care",
+//       health: 100,
+//       score: 70,
+//       actions: [
+//         {
+//           name: "squash",
+//           healthEffect: 50,
+//           text: "Cleaning the bottle makes in easier to recycle",
+//         },
+//         {
+//           name: "clean",
+//           healthEffect: 50,
+//           text: "Removing the cap makes the bottle recyclable",
+//         },
+//       ],
+//     },
+//   ],
+// };
 
 // functions required for playing
 function processPlayerAction(action: any) {
@@ -142,29 +184,68 @@ function processPlayerAction(action: any) {
   }
 }
 
-
-//------------------------------------------------------------------------------
-
-
 function startGame() {
-  store.commit("createRubbishItem", JSON.parse(JSON.stringify(demoRubbish)));
-  store.commit("createRubbishItem", JSON.parse(JSON.stringify(demoRubbish)));
+  // store.commit("createRubbishItem", JSON.parse(JSON.stringify(foodScraps)));
+  store.commit("createRubbishItem", JSON.parse(JSON.stringify(plasticBottle)));
   store.commit("setGameState", "playing");
   store.commit("setCurrentHighScore", 0);
 }
 
+async function drawGame() {
+  // run infinite loop to continously draw the right image to the screen
+  console.log("drawing");
+  const baseHeight = 540;
+  const baseWidth = 390;
 
-//------------------------------------------------------------------------------
+  const screenWidth = window.innerWidth;
+  const newRatio = screenWidth / baseWidth;
 
+  let adjustedHeight = baseHeight * newRatio;
+  let adjustedWidth = baseWidth * newRatio;
+
+  if (gameCanvas.value) {
+    const context = gameCanvas.value.getContext("2d");
+
+    if (context) {
+      context.canvas.width = adjustedWidth;
+      context.canvas.height = adjustedHeight;
+
+      // check that the current game state is playing
+      if (store.state.gameState === "playing") {
+        console.log("playing!");
+        // get the current rubbish item
+        let item = rubbishItem.value;
+
+        // if the actionsCount matches actions length, it means
+        // the user hasn't made any moves. Draw the baseImage
+        if (item.actionsCount === item.actions.length) {
+          console.log("this is true");
+          let img = await getSprite(item.images[item.baseImage]);
+
+          context.drawImage(img, 0, 0);
+          console.log("got image!");
+        }
+      }
+      if (store.state.gameState === "bossBattle") {
+        //TOD
+      }
+    }
+  }
+
+  window.requestAnimationFrame(drawGame);
+}
+
+async function getSprite(file: string) {
+  let img = new Image();
+  img.src = `/rubbish/${file}`;
+
+  await img.decode();
+  return img;
+}
 
 function toggleIsPlaying() {
   store.commit("setIsPlaying", false);
 }
-
-
-//------------------------------------------------------------------------------
-
-
 // watcher for player actions
 watch(
   () => bus.value.get("playerAction"),
@@ -175,28 +256,21 @@ watch(
   }
 );
 
-
-//------------------------------------------------------------------------------
-
-
 // computed variables from the store
 let rubbishItem = computed<rubbish>((): rubbish => {
   return store.state.rubbishItems[0];
 });
 
-
-//------------------------------------------------------------------------------
-
+let currentRubbishBoss = computed<rubbishBoss>((): rubbishBoss => {
+  return store.state.rubbishBosses[0];
+});
 
 let currentHighScore = computed<number>((): number => {
   return store.state.currentHighScore;
 });
 
-
-//------------------------------------------------------------------------------
-
-
 onMounted(() => {
+  drawGame();
   store.commit("setGameState", "welcome");
 });
 </script>
@@ -222,5 +296,29 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.game-body {
+  // animation: hurtAnimation 0.6s infinite;
+}
+
+@keyframes hurtAnimation {
+  0% {
+    filter: none;
+  }
+  25% {
+    filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-50deg)
+      saturate(600%) contrast(0.8);
+  }
+  50% {
+    filter: none;
+  }
+  75% {
+    filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-50deg)
+      saturate(600%) contrast(0.8);
+  }
+  100% {
+    filter: none;
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="game-body">
-    <img :src="rubbishImage" alt="" />
+    <img :src="rubbishImage" alt="" class="image" />
   </div>
 </template>
 
@@ -18,3 +18,6 @@ export default {
   name: "gameBody",
 };
 </script>
+
+<style lang="scss">
+</style>
