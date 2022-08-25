@@ -97,7 +97,7 @@ export default {
   background-color: var(--light-purple);
   color: white;
   position: relative;
-  margin-top:0;
+  margin-top: 0;
   border-bottom: 8px solid var(--dark-purple);
   transition: all 0.3s ease;
 
