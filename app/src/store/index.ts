@@ -26,11 +26,20 @@ export type rubbish = {
   health: number;
   actions: Array<action>;
   location: string | Array<number>;
+  complimentaryColor: string;
+};
+
+export type bossSegment = {
+  instance: rubbish;
+  position: Array<number>;
+  image: string;
 };
 
 export type rubbishBoss = {
   name: string;
-  segments: Array<rubbish>;
+  segments: Array<bossSegment>;
+  score: number;
+  health: number;
 };
 
 export interface State {
@@ -63,11 +72,38 @@ export const store = createStore<State>({
     createRubbishItem(state: State, payload: rubbish) {
       state.rubbishItems.push(payload);
     },
+    createRubbishBoss(state: State, payload: rubbishBoss) {
+      state.rubbishBosses.push(payload);
+    },
     setCurrentHighScore(state: State, score: number) {
       state.currentHighScore = score;
     },
     removeFirstRubbishItem(state: State) {
       const item: rubbish = state.rubbishItems[0];
+
+      // add to the player's score
+      state.currentHighScore += item.score;
+
+      // remove the first item in the array
+      state.rubbishItems.splice(0, 1);
+
+      // check if all the items from the array have been removed. If yes, end the game
+      if (state.rubbishItems.length <= 0) {
+        // check if there are any bosses
+        if (state.rubbishBosses.length > 0) {
+          state.gameState = "bossBattle";
+        } else {
+          state.gameState = "finished";
+
+          state.allTimeHighScore =
+            state.currentHighScore > state.allTimeHighScore
+              ? state.currentHighScore
+              : state.allTimeHighScore;
+        }
+      }
+    },
+    removeFirstRubbishBoss(state: State) {
+      const item: rubbishBoss = state.rubbishBosses[0];
 
       console.log(item);
 

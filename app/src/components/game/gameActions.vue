@@ -1,9 +1,9 @@
 <template>
   <div class="game-actions">
-    <div class="columns is-mobile" v-if="rubbishItem.health > 0">
+    <div class="columns is-mobile" v-if="rubbishItem.actions.length > 0">
       <div class="column">
         <button
-          class="action-button action-button--blue"
+          class="action-button action-button--red"
           @click="emitActionChoice('cut')"
         >
           Cut
@@ -11,17 +11,17 @@
       </div>
       <div class="column">
         <button
-          class="action-button action-button--orange"
+          class="action-button action-button--red"
           @click="emitActionChoice('squash')"
         >
           Squash
         </button>
       </div>
     </div>
-    <div class="columns is-mobile" v-if="rubbishItem.health > 0">
+    <div class="columns is-mobile" v-if="rubbishItem.actions.length > 0">
       <div class="column">
         <button
-          class="action-button action-button--green"
+          class="action-button action-button--red"
           @click="emitActionChoice('clean')"
         >
           Clean
@@ -29,14 +29,14 @@
       </div>
       <div class="column">
         <button
-          class="action-button action-button--purple"
+          class="action-button action-button--red"
           @click="emitActionChoice('remove')"
         >
           Remove
         </button>
       </div>
     </div>
-    <div class="columns is-mobile" v-if="rubbishItem.health <= 0">
+    <div class="columns is-mobile" v-if="rubbishItem.actions.length <= 0">
       <div class="column">
         <button
           class="action-button action-button--yellow"
@@ -93,7 +93,7 @@ export default {
   outline: none;
   border: none;
   font-family: "Silkscreen";
-  width: 100px;
+  min-width: 100px;
   background-color: var(--light-purple);
   color: white;
   position: relative;
@@ -108,25 +108,25 @@ export default {
     transition: all 0.3s ease;
   }
 
-  // &--green {
-  //   background-color: #3ae374;
-  //   color: white;
-  // }
+  &--green {
+    background-color: #3ae374;
+    color: white;
+  }
 
-  // &--red {
-  //   background-color: #ff3838;
-  //   color: white;
-  // }
+  &--red {
+    background-color: #dc546d;
+    color: white;
+  }
 
-  // &--orange {
-  //   background-color: #ff9f1a;
-  //   color: white;
-  // }
+  &--orange {
+    background-color: #ff9f1a;
+    color: white;
+  }
 
-  // &--blue {
-  //   background-color: #0652dd;
-  //   color: white;
-  // }
+  &--blue {
+    background-color: #0652dd;
+    color: white;
+  }
 
   // &--purple {
   //   background-color: #c56cf0;
@@ -137,10 +137,10 @@ export default {
   //   background-color: #ef5777;
   //   color: white;
   // }
-  // &--yellow {
-  //   background-color: #ffd32a;
-  //   color: white;
-  // }
+  &--yellow {
+    background-color: #ffd32a;
+    color: white;
+  }
 }
 
 .column {

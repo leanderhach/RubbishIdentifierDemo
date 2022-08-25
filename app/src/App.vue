@@ -71,7 +71,7 @@ h2,
 h3,
 p {
   &.is-brand {
-    font-family: "Rubik Dirt";
+    font-family: "Silkscreen";
   }
 
   &.is-white {
