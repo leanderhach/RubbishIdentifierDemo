@@ -6,7 +6,12 @@ export type action = {
   name: string;
   healthEffect: number;
   text: string;
-  validImages: Array<number>;
+  validImages: Array<validImage>;
+};
+
+type validImage = {
+  image: number;
+  condition: string;
 };
 
 export type rubbish = {

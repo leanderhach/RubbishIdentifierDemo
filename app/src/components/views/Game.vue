@@ -47,6 +47,7 @@ import useEventsBus from "../../utils/EventBus";
 
 import gameHeader from "../game/gameHeader.vue";
 import gameActions from "../game/gameActions.vue";
+import { isTypeParameter } from "@babel/types";
 
 const store = useStore();
 const { bus } = useEventsBus();
@@ -54,6 +55,8 @@ const gameCanvas = ref<HTMLCanvasElement | null>(null);
 
 let loadedImages = Array<HTMLImageElement>();
 let currentGameState = computed(() => store.state.gameState);
+
+let gameImage = ref<HTMLImageElement>();
 
 const plasticBottle: rubbish = {
   name: "Plastic Bottle",
@@ -81,13 +84,31 @@ const plasticBottle: rubbish = {
       name: "clean",
       healthEffect: 50,
       text: "Cleaning the bottle makes in easier to recycle",
-      validImages: [0, 2],
+      validImages: [
+        {
+          image: 0,
+          condition: "remove",
+        },
+        {
+          image: 2,
+          condition: "!remove",
+        },
+      ],
     },
     {
       name: "remove",
       healthEffect: 50,
       text: "Removing the cap makes the bottle recyclable",
-      validImages: [1, 2],
+      validImages: [
+        {
+          image: 1,
+          condition: "clean",
+        },
+        {
+          image: 2,
+          condition: "!clean",
+        },
+      ],
     },
   ],
 };
@@ -146,7 +167,7 @@ const plasticBottle: rubbish = {
 // };
 
 // functions required for playing
-function processPlayerAction(action: any) {
+async function processPlayerAction(action: any) {
   action = action[0];
 
   // first check if the action is throwing away. If yes, check that the right choice
@@ -173,6 +194,36 @@ function processPlayerAction(action: any) {
   // if the action chosen exists on the item that is being fought
   if (isCorrectAction) {
     rubbishItem.value.health -= isCorrectAction.healthEffect;
+
+    // check every action, check if the images are valid, then display them
+    // iterate through the actions still on the object
+    // iterate through the valid images array of the action
+    for (let validImage of isCorrectAction.validImages) {
+      // check the content of the validator
+      if (
+        validImage.condition.includes("!") &&
+        rubbishItem.value.actions.findIndex(
+          (item) => item.name === validImage.condition.substring(1)
+        ) === -1
+      ) {
+        console.log("its a negation");
+        gameImage.value = await getSprite(
+          rubbishItem.value.images[validImage.image]
+        );
+      } else if (
+        !validImage.condition.includes("!") &&
+        rubbishItem.value.actions.findIndex(
+          (item) => item.name === validImage.condition
+        ) !== -1
+      ) {
+        console.log("its not a negation");
+        console.log(validImage.image);
+        gameImage.value = await getSprite(
+          rubbishItem.value.images[validImage.image]
+        );
+      }
+    }
+
     rubbishItem.value.actions.splice(
       rubbishItem.value.actions.indexOf(isCorrectAction),
       1
@@ -193,7 +244,6 @@ function startGame() {
 
 async function drawGame() {
   // run infinite loop to continously draw the right image to the screen
-  console.log("drawing");
   const baseHeight = 540;
   const baseWidth = 390;
 
@@ -212,22 +262,43 @@ async function drawGame() {
 
       // check that the current game state is playing
       if (store.state.gameState === "playing") {
-        console.log("playing!");
         // get the current rubbish item
         let item = rubbishItem.value;
 
         // if the actionsCount matches actions length, it means
         // the user hasn't made any moves. Draw the baseImage
         if (item.actionsCount === item.actions.length) {
-          console.log("this is true");
-          let img = await getSprite(item.images[item.baseImage]);
-
-          context.drawImage(img, 0, 0);
-          console.log("got image!");
+          gameImage.value = await getSprite(item.images[item.baseImage]);
+        } else {
+          // check every action, check if the images are valid, then display them
+          // iterate through the actions still on the object
+          // for (let action of item.actions) {
+          //   console.log(action.name);
+          //   // iterate through the valid images array of the action
+          //   for (let validImage of action.validImages) {
+          //     console.log(validImage.condition);
+          //     // check the content of the validator
+          //     if (
+          //       validImage.condition.includes("!") &&
+          //       item.actions.findIndex(
+          //         (item) => item.name === validImage.condition.substring(1)
+          //       ) === -1
+          //     ) {
+          //       gameImage.value = await getSprite(
+          //         item.images[validImage.image]
+          //       );
+          //     }
+          //   }
+          // }
         }
       }
       if (store.state.gameState === "bossBattle") {
         //TOD
+      }
+
+      //finally, draw the frame
+      if (gameImage.value) {
+        context.drawImage(gameImage.value, 0, 0);
       }
     }
   }

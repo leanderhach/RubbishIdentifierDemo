@@ -30,9 +30,9 @@
       <div class="column">
         <button
           class="action-button action-button--purple"
-          @click="emitActionChoice('grab')"
+          @click="emitActionChoice('remove')"
         >
-          Grab
+          Remove
         </button>
       </div>
     </div>
