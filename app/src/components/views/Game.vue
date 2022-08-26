@@ -193,6 +193,24 @@ const foodScraps: rubbish = {
   actions: [],
 };
 
+const plasticWrapper: rubbish = {
+  name: "Chocolate Wrapper",
+  images: [
+    //chocolate wrapper
+    "Chocolate_Bar_Wrapper.png",
+  ],
+  location: "focus",
+  type: "plastic",
+  bin: "general",
+  flavorText: "Plastic wrappers are everywhere, and pose a big hazard to wildlife",
+  health: 100,
+  score: 15,
+  actionsCount: 0,
+  baseImage: 0,
+  complimentaryColor: "#fbb1ff",
+  actions: [],
+};
+
 const newRubbishBoss: rubbishBoss = {
   name: "Quisquilia",
   score: 300,
@@ -306,6 +324,7 @@ async function processPlayerAction(action: any) {
 function startGame() {
   store.commit("resetGame");
   store.commit("createRubbishItem", JSON.parse(JSON.stringify(foodScraps)));
+  store.commit("createRubbishItem", JSON.parse(JSON.stringify(plasticWrapper)));
   store.commit("createRubbishItem", JSON.parse(JSON.stringify(cardboardBox)));
   store.commit("createRubbishItem", JSON.parse(JSON.stringify(plasticBottle)));
   // store.commit("createRubbishBoss", JSON.parse(JSON.stringify(newRubbishBoss)));
