@@ -143,7 +143,7 @@ const plasticBottle: rubbish = {
 };
 
 const cardboardBox: rubbish = {
-  name: "Carboard Box",
+  name: "Cardboard Box",
   images: [
     //full assembled box
     "cardboardBox-0.png",
