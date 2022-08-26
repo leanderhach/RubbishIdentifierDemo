@@ -202,7 +202,8 @@ const plasticWrapper: rubbish = {
   location: "focus",
   type: "plastic",
   bin: "general",
-  flavorText: "Plastic wrappers are everywhere, and pose a big hazard to wildlife",
+  flavorText:
+    "Plastic wrappers are everywhere, and pose a big hazard to wildlife",
   health: 100,
   score: 15,
   actionsCount: 0,
