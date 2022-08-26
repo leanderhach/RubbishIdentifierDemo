@@ -102,6 +102,9 @@ export const store = createStore<State>({
         }
       }
     },
+    endGame(state: State) {
+      state.gameState = "finished";
+    },
     removeFirstRubbishBoss(state: State) {
       const item: rubbishBoss = state.rubbishBosses[0];
 

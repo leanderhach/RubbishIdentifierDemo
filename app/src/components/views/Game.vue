@@ -3,7 +3,7 @@
     <div class="game-welcome" v-if="currentGameState === 'welcome'">
       <div class="columns">
         <div class="column">
-          <h1 class="is-brand is-white">Rubbish Wranglers</h1>
+          <h1 class="is-brand is-white is-text-center">Rubbish Wranglers</h1>
         </div>
         <div class="column">
           <p class="is-white is-brand">High Score: {{ currentHighScore }}</p>
@@ -42,7 +42,7 @@
     <div class="game-goodbye" v-if="currentGameState === 'finished'">
       <div class="columns">
         <div class="column">
-          <h1 class="is-white is-brand">Thanks for playing!</h1>
+          <h1 class="is-white is-brand is-text-center">Thanks for playing!</h1>
         </div>
         <div class="column">
           <p class="is-brand is-white">High Score: {{ currentHighScore }}</p>
@@ -143,7 +143,7 @@ const plasticBottle: rubbish = {
 };
 
 const cardboardBox: rubbish = {
-  name: "Plastic Bottle",
+  name: "Carboard Box",
   images: [
     //full assembled box
     "cardboardBox-0.png",
@@ -422,7 +422,7 @@ export default {
 .game {
   height: 100%;
   width: 100%;
-  overflow: hidden;
+  overflow-y: hidden;
   background-color: #111215;
 }
 

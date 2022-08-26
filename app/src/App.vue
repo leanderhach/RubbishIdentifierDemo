@@ -79,6 +79,10 @@ p {
   }
 }
 
+.is-text-center {
+  text-align: center;
+}
+
 .button {
   &.is-circle {
     border-radius: 50%;
