@@ -63,6 +63,10 @@ export const store = createStore<State>({
     isPlaying: false,
   },
   mutations: {
+    resetGame(state: State) {
+      state.rubbishItems = [];
+      state.rubbishBosses = [];
+    },
     setGameState(state: State, payload: string) {
       state.gameState = payload;
     },

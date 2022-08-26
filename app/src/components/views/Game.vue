@@ -304,6 +304,7 @@ async function processPlayerAction(action: any) {
 }
 
 function startGame() {
+  store.commit("resetGame");
   store.commit("createRubbishItem", JSON.parse(JSON.stringify(foodScraps)));
   store.commit("createRubbishItem", JSON.parse(JSON.stringify(cardboardBox)));
   store.commit("createRubbishItem", JSON.parse(JSON.stringify(plasticBottle)));
@@ -422,7 +423,7 @@ export default {
 .game {
   height: 100%;
   width: 100%;
-  overflow-y: hidden;
+  overflow-x: hidden;
   background-color: #111215;
 }
 
