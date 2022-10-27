@@ -232,6 +232,7 @@ function toggleAndReset() {
   togglePopup();
   hasTakenPhoto.value = false;
   isLoading.value = false;
+  emit("resetCamera", true);
 }
 
 async function userSelectedLearn() {

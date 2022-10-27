@@ -14,12 +14,21 @@
 import VideoFeed from "./components/scanner/VideoFeed.vue";
 import InteractableOverlay from "./components/scanner/InteractableOverlay.vue";
 import gameView from "./components/views/Game.vue";
-import { computed } from "@vue/runtime-core";
+import { computed, onMounted } from "@vue/runtime-core";
 import { useStore } from "./store";
 
 const store = useStore();
 
 const isPlayingGame = computed<boolean>(() => store.state.isPlaying);
+
+onMounted(() => {
+  window.addEventListener("load", function () {
+    setTimeout(function () {
+      // This hides the address bar:
+      window.scrollTo(0, 1);
+    }, 0);
+  });
+});
 </script>
 
 <style lang="scss">
