@@ -30,6 +30,15 @@ watch(
   }
 );
 
+watch(
+  () => bus.value.get("resetCamera"),
+  async (val) => {
+    video.value?.play();
+    const [sidebarCollapsedBus] = val ?? [];
+    bus.value.get("resetCamera").value = sidebarCollapsedBus;
+  }
+);
+
 let stream = null;
 const video = ref<HTMLVideoElement | null>(null);
 const canvas = ref<HTMLCanvasElement | null>(null);
@@ -85,10 +94,14 @@ async function takePicture() {
         ],
       };
 
+      video.value.pause();
+
       const label = await axios.post(
         `https://vision.googleapis.com/v1/images:annotate?key=${process.env.VUE_APP_GOOGLE_API_KEY}`,
         data
       );
+
+      console.log(label);
 
       if (label.data) {
         emit("returnedLabelData", label.data);

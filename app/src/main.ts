@@ -22,6 +22,7 @@ import {
   faThumbsDown,
   faThumbsUp,
   faTimes,
+  faQuestion,
 } from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
@@ -36,6 +37,7 @@ library.add(faInfo);
 library.add(faThumbsDown);
 library.add(faSpinner);
 library.add(faPlay);
+library.add(faQuestion);
 
 /* add font awesome icon component */
 

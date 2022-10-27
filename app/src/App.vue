@@ -26,6 +26,7 @@ const isPlayingGame = computed<boolean>(() => store.state.isPlaying);
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap");
 @import "~bulma";
 @import url("https://fonts.googleapis.com/css2?family=Rubik+Dirt&family=Silkscreen&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap");
 
 body,
 html,
@@ -51,7 +52,7 @@ main {
   height: 100%;
   position: relative;
   background-color: var(--black);
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 400;
 }
 
