@@ -43,7 +43,7 @@ html,
 main {
   margin: 0;
   padding: 0;
-  height: 100vh;
+  height: calc(100vh - 70px);
   width: 100%;
 }
 
