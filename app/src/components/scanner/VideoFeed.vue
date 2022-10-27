@@ -2,6 +2,8 @@
   <video
     ref="video"
     autoplay
+    muted
+    playsinline
     :width="windowWidth"
     :height="windowHeight"
     :srcObject="stream"
