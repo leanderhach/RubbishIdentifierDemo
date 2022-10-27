@@ -24,6 +24,7 @@ const isPlayingGame = computed<boolean>(() => store.state.isPlaying);
 onMounted(() => {
   window.addEventListener("load", function () {
     setTimeout(function () {
+      console.log("running");
       // This hides the address bar:
       window.scrollTo(0, 1);
     }, 0);
@@ -42,7 +43,7 @@ html,
 main {
   margin: 0;
   padding: 0;
-  height: 100%;
+  height: 100vh;
   width: 100%;
 }
 

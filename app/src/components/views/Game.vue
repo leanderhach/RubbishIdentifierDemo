@@ -397,7 +397,11 @@ async function drawGame() {
       }
       // if not boss battle, draw the gameImage as necessary
       else if (gameImage.value) {
-        context.drawImage(gameImage.value, 0, 0);
+        context.drawImage(
+          gameImage.value,
+          adjustedWidth / 2 - 0.5 * gameImage.value.width,
+          adjustedHeight / 2 - 0.5 * gameImage.value.height
+        );
         gameBackground.value?.setAttribute(
           "fill",
           rubbishItem.value.complimentaryColor
@@ -471,6 +475,10 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+
+  .columns {
+    flex-direction: column;
+  }
 }
 
 .game-canvas,
